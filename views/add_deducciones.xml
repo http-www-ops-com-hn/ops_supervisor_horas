@@ -28,8 +28,9 @@
                     <group>
                         <field name="employee_id"/>
                         <field name="tipo_dedu_id" options="{'no_create': True}"/>
+                        <field name="fecha_precio"/>
                         <field name="monto_lps"/>
-                    </group>
+                     </group>
                 </sheet>
 
                 <div class="oe_chatter">
@@ -49,12 +50,12 @@
         <field name="view_type">form</field>
         <field name="view_mode">list,form</field>
     </record>
-
+   
                 <menuitem name="Deducciones" id="menu_deducciones" 
-                    parent="ops_supervisor_horas.menu_hr_attendance_root"
-                    groups="rrhh_giangvien_group"
-                    action="action_123_descuento"
-                    sequence="3"/>
+                      parent="ops_supervisor_horas.menu_hr_attendance_root"
+                      groups="rrhh_giangvien_group"
+                      action="action_123_descuento"
+                      sequence="3"/>
 
 
     </data>

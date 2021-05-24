@@ -1,0 +1,2 @@
+# -*- coding: utf-8 -*-
+from . import hr, precio, ingresos_empleados, deducciones_empleados, proyecto, cartera,configuraciones_nomina, dedu_ingre_anuales,hr_solicitud_ausencia,inherint_leave,inherint_hr_employe, comisiones_estimado
