@@ -79,6 +79,18 @@ class Ops_Inherints_empleados(models.Model):
     profesion_hn = fields.Char("Profesion")
     no_cartera = fields.Boolean('No pertenece a campañas', default=False)
 
+    tipo_parentescoss = fields.Selection([('Tio(a)', 'Tio(a)'),
+                                      ('Hermano(a)', 'Hermano(a)'),
+                                      ('Hijo(a)', 'Hijo(a)'),
+                                      ('Padre', 'Padre'),
+                                      ('Conyuge', 'Conyuge'),
+                                      ('Madre', 'Madre'),
+                                      ('Primo(a)', 'Primo(a)'), 
+                                      ('Amigo(a)', 'Amigo(a)'),
+                                      ('Abuelo(a)' , 'Abuelo(a)'),
+                                      ('Cuñado(a)' , 'Cuñado(a)'),
+                                      ('Suegro(a)' , 'Suegro(a)')],
+                                     string='Tipo Parentesco', required=True)
 
 
     _sql_constraints = [

@@ -8,6 +8,10 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
 
+            <field name="emergency_contact" position="after">
+                   <field name="tipo_parentescoss" />
+            </field>
+
             <field name="identification_id" position="after">
                     <field name="rtn_emple" />
                     <field name="correo_personals" />

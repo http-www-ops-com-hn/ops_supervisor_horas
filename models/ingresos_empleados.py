@@ -28,9 +28,10 @@ class IngresosHoras(models.Model):
     employee_id = fields.Many2one('hr.employee', string="Empleado", 
                                   default=default_employee2, required=True, 
                                   ondelete='cascade', index=True)
-    
+    #Se agrego el dominio para los ingresos, en tipo de ingreso 
     tipo_ingre_id = fields.Many2one('hr.salary.rule', 
                                    string="Tipo Ingreso", 
+                                   domain=[('category_id.code', '=', 'INGRE')],
                                    required=True, 
                                    ondelete='cascade', 
                                    index=True)

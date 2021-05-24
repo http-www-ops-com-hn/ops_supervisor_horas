@@ -24,16 +24,17 @@ class DeduccionesHoras(models.Model):
 
     def default_employee2(self):
         return self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)
-     
+
     employee_id = fields.Many2one('hr.employee', string="Empleado", 
-                                  default=default_employee2, required=True, 
-                                  ondelete='cascade', index=True)
-    
-    tipo_dedu_id = fields.Many2one('hr.salary.rule', 
-                                   string="Tipo Deduccion", 
-                                   required=True, 
-                                   ondelete='cascade', 
-                                   index=True)
-                                   
+                                    default=default_employee2, required=True, 
+                                    ondelete='cascade', index=True)
+#Se agrego el dominio para las deducciones, en tipo de deduccion
+    tipo_dedu_id = fields.Many2one('hr.salary.rule',
+                                    string="Tipo Deduccion",
+                                    domain=[('category_id.code', '=', 'DED')],
+                                    required=True,
+                                    ondelete='cascade', 
+                                    index=True)
+
     fecha_precio = fields.Date("Fecha Creacion",  required=True)
     monto_lps = fields.Float("Monto", required=True)
