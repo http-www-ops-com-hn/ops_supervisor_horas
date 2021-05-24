@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+            <record model="ir.module.category" id="module_category_crm_resuelva">
+	            <field name="name">CRM Resuelva</field>
+	            <field name="description">CRM Resuelva</field>
+	            <field name="sequence">4</field>
+			</record>
+			
+			<record id="colaborador_group" model="res.groups"> 
+	            <field name="name">Colaborador RRHH</field>
+	            <field name="category_id" ref="module_category_crm_resuelva"/>
+       		 </record>
+
+			<record id="asinhvien_giangvien_group" model="res.groups"> 
+	            <field name="name">Supervisor</field>
+	            <field name="category_id" ref="module_category_crm_resuelva"/>
+       		 </record>
+
+       		<record id="rrhh_giangvien_group" model="res.groups"> 
+	            <field name="name">Gerente RRHH</field>
+	            <field name="category_id" ref="module_category_crm_resuelva"/>
+       		 </record>
+
+			
+
+    </data>
+</odoo>

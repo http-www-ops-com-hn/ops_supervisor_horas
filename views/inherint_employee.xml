@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+    <record model="ir.ui.view" id="hr_employeee_herencia_aprobadas_inherit_form_view">
+        <field name="name">hr_employeeee_form_view_boton_notificar</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <field name="identification_id" position="after">
+                    <field name="rtn_emple" />
+                    <field name="correo_personals" />
+                    <field name="cuenta_bancaria_personal" />
+                    <field name="fecha_ingreso" />
+                    <field name="profesion_hn" />
+                    <field name="domicilio_he" />
+
+            </field>
+
+            <field name="bank_account_id" position="after">
+
+                    <field name="tipo_camisa" />
+                    <field name="personas_dependen" />
+                    <field name="vive_en_casa" />
+
+                    <field name="paga_renta" />
+                    <field name="renta_mensual" attrs="{'invisible': ['|', ('active','=',False), ('paga_renta', '!=', 'SI')]}"/>
+                    <field name="pariente_trabaja"  />
+                    <field name="periente_ops" attrs="{'invisible': ['|', ('active','=',False), ('pariente_trabaja', '!=', 'SI')]}" />
+                    <field name="auto_propio" />
+
+                    <field name="tiene_otro_ingreso" />
+                    <field name="tiene_deudas" />
+
+            </field>
+            
+
+        </field>
+    </record>
+    
+    
+    </data>
+</odoo>

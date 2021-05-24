@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="data_test_tree_ingresos" model="ir.ui.view">
+        <field name="name">ingresos.tree</field>
+        <field name="model">test_model_ingresos</field>
+        <field name="arch" type="xml">
+            <tree string="Ingresos">
+                <field name="employee_id"/>
+                <field name="tipo_ingre_id"/>
+                <field name="fecha_precio"/>     
+                <field name="monto_lps"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--PRIMERO-->
+    <record id="data_test_form_ingresos" model="ir.ui.view">
+        <field name="name">ingresos.ticket.form</field>
+        <field name="model">test_model_ingresos</field>
+        <field name="arch" type="xml">
+            <form string="Ingresos">
+                <header>
+
+                </header>
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="tipo_ingre_id" options="{'no_create': True}"/>
+                        <field name="fecha_precio"/>
+                        <field name="monto_lps"/>
+                     </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            
+            </form>
+        </field>
+    </record>
+
+    
+    <record id="action_123_ingreso" model="ir.actions.act_window">
+        <field name="name">Ingresos Colaboradores</field>
+        <field name="res_model">test_model_ingresos</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">list,form</field>
+    </record>
+   
+                <menuitem name="Ingresos" id="ingresos_deducciones" 
+                      parent="ops_supervisor_horas.menu_hr_attendance_root"
+                      groups="rrhh_giangvien_group"
+                      action="action_123_ingreso"
+                      sequence="4"/>
+
+
+    </data>
+</odoo>

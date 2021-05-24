@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="data_test_ausencias_supervisor_tree" model="ir.ui.view">
+        <field name="name">test_model_asuencias_ops.tree</field>
+        <field name="model">test_model_asuencias_ops</field>
+        <field name="arch" type="xml">
+            <tree string="Ausencias" decoration-danger="state == 'refuse'" decoration-info="state == 'draft'">
+                <field name="employee_id"/>
+                <field name="holiday_type" string="Modo" />
+                <field name="holiday_status_id"/>
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="duration_display"/>
+                <field name="state"/>
+                <field name="department_id" invisible="1"/>
+                <field name="manager_id" invisible="1"/>
+                <field name="user_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+
+    
+    
+    <!--PRIMERO-->
+    <record id="data_test_ausencias_supervisor_form" model="ir.ui.view">
+        <field name="name">test_model_asuencias_ops.form</field>
+        <field name="model">test_model_asuencias_ops</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Ausencias">
+                <field name="can_reset" invisible="1"/>
+                <field name="can_approve" invisible="1"/>
+                <header>
+                    <button string="Enviar Supervisor" name="envio_aprobacion_supervisor" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'draft')]}"/>
+                    <button string="Enviar RRHH" name="envio_aprobacion_rrhh" type="object" class="oe_highlight" groups="ops_supervisor_horas.asinhvien_giangvien_group,ops_supervisor_horas.rrhh_giangvien_group" attrs="{'invisible': ['|', ('state', '!=', 'confirm')]}"/>
+                    <button string="Rechazar" name="rechazar_aprobacion_supervisor" type="object" class="oe_highlight" groups="ops_supervisor_horas.asinhvien_giangvien_group,ops_supervisor_horas.rrhh_giangvien_group" attrs="{'invisible': ['|', ('state', '!=', 'confirm')]}"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                <field name="leave_type_request_unit" invisible="1"/>
+                <group>
+
+                    <group>
+                            <field name="holiday_status_id" context="{'employee_id':employee_id, 'default_date_from':date_from}" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+
+                    <group>
+                        <field name="number_of_days" invisible="1"/>
+                        <label for="number_of_days_display" string="Duration"/>
+
+                        <div>
+                            <div attrs="{'invisible': [('leave_type_request_unit', '=', 'hour')]}">
+                                <field name="number_of_days_display" nolabel="1" class="oe_inline"/>
+                                <span class="ml8">Dias</span>
+                            </div>
+                            <div attrs="{'invisible': [('leave_type_request_unit', '!=', 'hour')]}">
+                                <field name="number_of_hours_display" nolabel="1" class="oe_inline"/>
+                                <span class="ml8">Horas</span>
+                            </div>
+                        </div>
+
+                        <label for="request_date_from" string="Inicio"/>
+                         <div>
+                            <field name="date_from" invisible="1"/>
+                            <field name="date_to" invisible="1"/>
+                            <div class="o_row o_row_readonly o_hr_holidays_dates">
+                                <field name="request_date_from" class="oe_inline"
+                                    attrs="{'readonly': [('state', 'not in', ('draft', 'confirm'))]}"/>
+                                <span class="oe_inline"
+                                    attrs="{'invisible': ['|', ('request_unit_half', '=', True), ('request_unit_hours', '=', True)]}">
+                                    To
+                                </span>
+                                <field name="request_date_to" class="oe_inline"
+                                    attrs="{
+                                        'readonly': [('state', 'not in', ('draft', 'confirm'))],
+                                        'invisible': ['|', ('request_unit_half', '=', True), ('request_unit_hours', '=', True)]
+                                    }"/>
+                                <field name="request_date_from_period" class="oe_inline"
+                                    string="In"
+                                    options="{'horizontal': True}"
+                                    attrs="{
+                                        'readonly': [('state', 'not in', ('draft', 'confirm'))],
+                                        'required': [('request_unit_half', '=', True)],
+                                        'invisible': [('request_unit_half', '=', False)]}"/>
+                            </div>
+                            <div class="o_row o_row_readonly">
+                                <label for="request_unit_half"
+                                    attrs="{'readonly': [('state', 'not in', ('draft', 'confirm'))]}"/>
+                                <field name="request_unit_half"
+                                    attrs="{'readonly': [('state', 'not in', ('draft', 'confirm'))]}"/>
+                                <label for="request_unit_hours" attrs="{
+                                    'readonly': [('state', 'not in', ('draft', 'confirm'))],
+                                    'invisible': [('leave_type_request_unit', '!=', 'hour')]
+                                }"/>
+                                <field name="request_unit_hours" attrs="{
+                                    'readonly': [('state', 'not in', ('draft', 'confirm'))],
+                                    'invisible': [('leave_type_request_unit', '!=', 'hour')]
+                                }"/>
+                                <label for="request_unit_custom" invisible="1" attrs="{
+                                    'readonly': [('state', 'not in', ('draft', 'confirm'))],
+                                }"/>
+                                <field name="request_unit_custom" invisible="1" attrs="{
+                                    'readonly': [('state', 'not in', ('draft', 'confirm'))],
+                                }"/>
+                            </div>
+                            <div class="o_row o_row_readonly">
+                                <label for="request_hour_from" string="From"
+                                    attrs="{'invisible': [('request_unit_hours', '=', False)]}"/>
+                                <field name="request_hour_from"
+                                    attrs="{
+                                        'readonly': [('state', '=', 'validate')],
+                                        'required': [('request_unit_hours', '=', True)],
+                                        'invisible': [('request_unit_hours', '=', False)]}"/>
+                                <label for="request_hour_to" string="To"
+                                    attrs="{'invisible': [('request_unit_hours', '=', False)]}"/>
+                                <field name="request_hour_to"
+                                    attrs="{
+                                        'readonly': [('state', '=', 'validate')],
+                                        'required': [('request_unit_hours', '=', True)],
+                                        'invisible': [('request_unit_hours', '=', False)]}"/>
+                            </div>
+                        </div>
+                        <field name="name" attrs="{'readonly': [('state', 'not in', ('draft', 'confirm'))]}"/>
+                       
+                    </group>
+                      
+                    <group name="col_right">
+                        <field name="employee_id"/>
+                        <field name="department_id"/>
+                        <field name="cartera_id"/>
+                        <field name="proyecto_id"/>
+                    </group>
+                        
+
+                    <group name="col_right">
+                        <field name="supervisor_id"/>
+                    </group>
+                    
+                </group>
+                
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            
+            </form>
+        </field>
+    </record>
+
+   
+    <record id="action_123_ausencias_supervisor" model="ir.actions.act_window">
+        <field name="name">Ausencias</field>
+        <field name="res_model">test_model_asuencias_ops</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="domain">[('user_id', '=', uid)]</field>
+    </record>
+
+   
+    <record id="hr_ausencia_action_supervisor_tree" model="ir.actions.act_window.view">
+        <field name="sequence">2</field>
+        <field name="view_mode">tree</field>
+        <field name="act_window_id" ref="action_123_ausencias_supervisor"/>
+        <field name="view_id" ref="data_test_tree_ausencias"/>
+    </record>
+    <record id="hhr_ausencia_action_supervisor_form" model="ir.actions.act_window.view">
+        <field name="sequence">3</field>
+        <field name="view_mode">form</field>
+        <field name="act_window_id" ref="action_123_ausencias_supervisor"/>
+        <field name="view_id" ref="data_test_form_ausencias"/>
+    </record>
+
+    
+  
+   
+                <menuitem name="Aprobacion Ausencias" id="menu_ausencias_supervisor" 
+                      parent="ops_supervisor_horas.menu_hr_attendance_root"
+                      groups="asinhvien_giangvien_group,rrhh_giangvien_group"
+                      action="action_123_ausencias_supervisor"
+                      sequence="5"/>
+
+
+    </data>
+</odoo>

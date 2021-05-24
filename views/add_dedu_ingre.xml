@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="data_test_tree_deducciones_anual" model="ir.ui.view">
+        <field name="name">deducciones.ingre.tree</field>
+        <field name="model">model_tipo_dedu_ingre_anuales</field>
+        <field name="arch" type="xml">
+            <tree string="Deducciones">
+                <field name="employee_id"/>
+                <field name="fecha_inicio"/>
+                <field name="tipo_dedu_id"/> 
+                <field name="monto_lps"/>
+                <field name="tipo_moneda"/>
+                <field name="tipo_activo"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--PRIMERO-->
+    <record id="data_test_form_dedu_ingre_anual" model="ir.ui.view">
+        <field name="name">deducciones.ingresos.form</field>
+        <field name="model">model_tipo_dedu_ingre_anuales</field>
+        <field name="arch" type="xml">
+            <form string="Ingresos Anuales">
+                <header>
+
+                </header>
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="fecha_inicio"/> 
+                        <field name="tipo_dedu_id" options="{'no_create': True}" />
+                        <field name="monto_lps"/>
+                        <field name="monto_year"/>
+                        <field name="tipo_moneda"/>
+                        <field name="tipo_activo"/>
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            
+            </form>
+        </field>
+    </record>
+
+    
+    <record id="action_123_descuento_ingre" model="ir.actions.act_window">
+        <field name="name">Montos Anuales</field>
+        <field name="res_model">model_tipo_dedu_ingre_anuales</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">list,form</field>
+    </record>
+                <menuitem name="Monto Anuales" id="menu_deduccion_ingre" 
+                    parent="ops_supervisor_horas.menu_hr_attendance_root"
+                    groups="rrhh_giangvien_group"
+                    action="action_123_descuento_ingre"
+                    sequence="4"/>
+
+
+    </data>
+</odoo>
